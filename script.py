@@ -22,7 +22,7 @@ for num in range(num_disks, 0, -1):
     left_stack.push(num)
 
 # show the minimum amount of moves to complete the game
-num_optimal_moves = 2^num_disks - 1
+num_optimal_moves = 2**num_disks - 1
 print(f"\nThe fastest you can solve this game is in {num_optimal_moves} moves")
 
 # checks the users input to make sure it was a correct stack choice
@@ -39,7 +39,7 @@ def get_input():
                 if user_input == choices[i]:
                     return stacks[i]
 
-# setting up game / playing it
+# setting up game / starts it
 num_user_moves = 0
 
 while right_stack.get_size() != num_disks:
@@ -51,3 +51,17 @@ while right_stack.get_size() != num_disks:
         from_stack = get_input()
         print("\nWhich stack do you want to move to?\n")
         to_stack = get_input()
+
+        # checks to make sure move was valid before moving disks
+
+        if from_stack.is_empty():
+            print("\n\nInvalid Move. Try Again")
+        elif to_stack.is_empty() or (int(from_stack.peek()) < int(to_stack.peek())):
+            disk = from_stack.pop()
+            to_stack.push(disk)
+            num_user_moves += 1
+            break
+        else:
+            print("\n\nInvalid Move. Try Again")
+
+print(f"\n\nYou completed the game in {num_user_moves} moves, and the optimal number of moves is {num_optimal_moves}")
